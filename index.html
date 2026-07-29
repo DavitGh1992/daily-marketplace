@@ -1,1 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Marketplace</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
 
+    <!-- Header -->
+    <header>
+        <h1>🛒 Daily Marketplace</h1>
+        <nav>
+            <button id="buyerViewBtn" class="active">Buyer View</button>
+            <button id="sellerViewBtn">Seller Login</button>
+        </nav>
+    </header>
+
+    <!-- BUYER VIEW (Public) -->
+    <main id="buyerSection">
+        <h2>Today's Pricelists</h2>
+        <div id="pricelistContainer" class="grid">
+            <!-- Pricelists will be injected here by JS -->
+        </div>
+    </main>
+
+    <!-- SELLER VIEW (Private) -->
+    <section id="sellerSection" class="hidden">
+        
+        <!-- Login/Register Form -->
+        <div id="authForm" class="card">
+            <h2>Seller Portal</h2>
+            <input type="email" id="emailInput" placeholder="Email" required>
+            <input type="password" id="passwordInput" placeholder="Password" required>
+            <div class="btn-group">
+                <button id="loginBtn">Login</button>
+                <button id="registerBtn">Register</button>
+            </div>
+            <p id="authMessage"></p>
+        </div>
+
+        <!-- Seller Dashboard (Shown after login) -->
+        <div id="dashboard" class="hidden">
+            <h2>Welcome, <span id="sellerName"></span>!</h2>
+            <div class="card">
+                <h3>Post Today's Pricelist</h3>
+                <textarea id="pricelistInput" placeholder="Enter your pricelist (e.g., Apples: $1, Bananas: $2)"></textarea>
+                <button id="postPricelistBtn">Publish Pricelist</button>
+            </div>
+            <button id="logoutBtn" class="logout">Logout</button>
+        </div>
+
+    </section>
+
+    <script src="app.js"></script>
+</body>
+</html>
