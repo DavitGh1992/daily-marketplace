@@ -24,8 +24,8 @@ const mockPricelists = [
 ];
 
 // --- ЭЛЕМЕНТЫ ИНТЕРФЕЙСА ---
-const homeViewBtn = document.getElementById('homeViewBtn');
-const sellerViewBtn = document.getElementById('sellerViewBtn');
+const loginViewBtn = document.getElementById('loginViewBtn');
+const registerViewBtn = document.getElementById('registerViewBtn');
 const buyerSection = document.getElementById('buyerSection');
 const sellerSection = document.getElementById('sellerSection');
 const pricelistContainer = document.getElementById('pricelistContainer');
@@ -34,21 +34,22 @@ const loginForm = document.getElementById('loginForm');
 const dashboard = document.getElementById('dashboard');
 
 // --- ПЕРЕКЛЮЧЕНИЕ ВКЛАДОК ---
-homeViewBtn.addEventListener('click', () => {
+loginViewBtn.addEventListener('click', () => {
     buyerSection.classList.remove('hidden');
     sellerSection.classList.add('hidden');
-    homeViewBtn.classList.add('active');
-    sellerViewBtn.classList.remove('active');
+    loginViewBtn.classList.add('active');
+    registerViewBtn.classList.remove('active');
 });
 
-sellerViewBtn.addEventListener('click', () => {
+registerViewBtn.addEventListener('click', () => {
     buyerSection.classList.add('hidden');
     sellerSection.classList.remove('hidden');
-    sellerViewBtn.classList.add('active');
-    homeViewBtn.classList.remove('active');
-    // Показываем форму регистрации по умолчанию
+    registerViewBtn.classList.add('active');
+    loginViewBtn.classList.remove('active');
+    // Показываем форму регистрации
     authForm.classList.remove('hidden');
     loginForm.classList.add('hidden');
+    dashboard.classList.add('hidden');
 });
 
 // --- ПЕРЕКЛЮЧЕНИЕ МЕЖДУ РЕГИСТРАЦИЕЙ И ВХОДОМ ---
@@ -56,12 +57,18 @@ document.getElementById('showLoginBtn').addEventListener('click', (e) => {
     e.preventDefault();
     authForm.classList.add('hidden');
     loginForm.classList.remove('hidden');
+    // Обновляем активную кнопку в навигации
+    loginViewBtn.classList.add('active');
+    registerViewBtn.classList.remove('active');
 });
 
 document.getElementById('showRegisterBtn').addEventListener('click', (e) => {
     e.preventDefault();
     loginForm.classList.add('hidden');
     authForm.classList.remove('hidden');
+    // Обновляем активную кнопку в навигации
+    registerViewBtn.classList.add('active');
+    loginViewBtn.classList.remove('active');
 });
 
 // --- ОТОБРАЖЕНИЕ ПРАЙС-ЛИСТОВ ---
@@ -116,6 +123,12 @@ document.getElementById('registerBtn').addEventListener('click', () => {
     document.getElementById('passwordInput').value = '';
     document.getElementById('verifyPasswordInput').value = '';
     document.getElementById('authMessage').textContent = '';
+    
+    // Переключаемся на форму входа
+    authForm.classList.add('hidden');
+    loginForm.classList.remove('hidden');
+    loginViewBtn.classList.add('active');
+    registerViewBtn.classList.remove('active');
 });
 
 document.getElementById('loginBtn').addEventListener('click', () => {
@@ -128,8 +141,8 @@ document.getElementById('loginBtn').addEventListener('click', () => {
     }
     
     // Демо: имитируем вход
-    authForm.classList.add('hidden');
     loginForm.classList.add('hidden');
+    authForm.classList.add('hidden');
     dashboard.classList.remove('hidden');
     document.getElementById('sellerName').textContent = 'Продавец';
 });
@@ -146,8 +159,11 @@ document.getElementById('postPricelistBtn').addEventListener('click', () => {
 
 document.getElementById('logoutBtn').addEventListener('click', () => {
     dashboard.classList.add('hidden');
-    authForm.classList.remove('hidden');
+    loginForm.classList.remove('hidden');
     document.getElementById('sellerName').textContent = '';
+    // Обновляем навигацию
+    loginViewBtn.classList.add('active');
+    registerViewBtn.classList.remove('active');
 });
 
 // Инициализация
