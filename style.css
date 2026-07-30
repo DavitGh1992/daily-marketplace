@@ -7,23 +7,25 @@
 :root {
     --primary-gold: #d4af37;
     --secondary-gold: #c9a961;
-    --dark-bg: #0a0a0a;
-    --card-bg: #1a1a1a;
-    --text-light: #f5f5dc;
-    --text-muted: #888;
-    --border-gold: rgba(212, 175, 55, 0.3);
-    --shadow-gold: rgba(212, 175, 55, 0.2);
+    --light-purple: #b8a4c9;
+    --olive-green: #8b9a7b;
+    --dark-text: #2d2d2d;
+    --card-bg: rgba(255, 255, 255, 0.95);
+    --text-muted: #666;
+    --border-gold: rgba(212, 175, 55, 0.4);
+    --shadow-gold: rgba(212, 175, 55, 0.3);
 }
 
 body {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     background: 
-        radial-gradient(ellipse at top left, rgba(212, 175, 55, 0.03) 0%, transparent 50%),
-        radial-gradient(ellipse at bottom right, rgba(201, 169, 97, 0.03) 0%, transparent 50%),
-        radial-gradient(ellipse at center, rgba(26, 26, 26, 1) 0%, rgba(10, 10, 10, 1) 100%);
+        radial-gradient(ellipse at top left, rgba(184, 164, 201, 0.4) 0%, transparent 50%),
+        radial-gradient(ellipse at bottom right, rgba(139, 154, 123, 0.4) 0%, transparent 50%),
+        radial-gradient(ellipse at center, rgba(212, 175, 55, 0.15) 0%, transparent 60%),
+        linear-gradient(135deg, #f5f0f7 0%, #e8e5e0 50%, #f0ede5 100%);
     background-attachment: fixed;
     min-height: 100vh;
-    color: var(--text-light);
+    color: var(--dark-text);
     line-height: 1.6;
     position: relative;
 }
@@ -40,8 +42,8 @@ body::before {
             0deg,
             transparent,
             transparent 2px,
-            rgba(212, 175, 55, 0.01) 2px,
-            rgba(212, 175, 55, 0.01) 4px
+            rgba(212, 175, 55, 0.03) 2px,
+            rgba(212, 175, 55, 0.03) 4px
         );
     pointer-events: none;
     z-index: 0;
@@ -55,8 +57,8 @@ body::after {
     width: 100%;
     height: 100%;
     background: 
-        radial-gradient(circle at 20% 30%, rgba(212, 175, 55, 0.02) 0%, transparent 40%),
-        radial-gradient(circle at 80% 70%, rgba(201, 169, 97, 0.02) 0%, transparent 40%);
+        radial-gradient(circle at 20% 30%, rgba(184, 164, 201, 0.2) 0%, transparent 40%),
+        radial-gradient(circle at 80% 70%, rgba(139, 154, 123, 0.2) 0%, transparent 40%);
     pointer-events: none;
     z-index: 0;
 }
@@ -75,13 +77,13 @@ header, main, section, .container {
 
 /* Шапка */
 header {
-    background: rgba(10, 10, 10, 0.95);
+    background: rgba(255, 255, 255, 0.85);
     backdrop-filter: blur(10px);
-    border-bottom: 1px solid var(--border-gold);
+    border-bottom: 2px solid var(--primary-gold);
     position: sticky;
     top: 0;
     z-index: 1000;
-    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
 }
 
 .header-container {
@@ -110,12 +112,12 @@ header {
 }
 
 .logo h1:hover {
-    color: var(--text-light);
+    color: var(--olive-green);
     text-shadow: 0 0 20px var(--shadow-gold);
 }
 
 .tagline {
-    color: var(--secondary-gold);
+    color: var(--olive-green);
     font-size: 0.85rem;
     font-style: italic;
     margin-top: 0.2rem;
@@ -130,12 +132,12 @@ header {
 .nav-btn {
     background: transparent;
     color: var(--primary-gold);
-    border: 1px solid var(--primary-gold);
+    border: 2px solid var(--primary-gold);
     padding: 0.7rem 1.8rem;
     border-radius: 4px;
     cursor: pointer;
     font-size: 0.95rem;
-    font-weight: 500;
+    font-weight: 600;
     letter-spacing: 0.5px;
     transition: all 0.3s ease;
     font-family: inherit;
@@ -143,7 +145,7 @@ header {
 
 .nav-btn:hover {
     background: var(--primary-gold);
-    color: var(--dark-bg);
+    color: white;
     box-shadow: 0 4px 15px var(--shadow-gold);
 }
 
@@ -160,12 +162,13 @@ header {
     font-weight: 600;
     letter-spacing: 2px;
     margin-bottom: 0.5rem;
+    text-shadow: 0 2px 10px rgba(212, 175, 55, 0.2);
 }
 
 .section-subtitle {
-    color: var(--text-muted);
+    color: var(--olive-green);
     font-size: 1rem;
-    font-weight: 300;
+    font-weight: 400;
 }
 
 /* Контейнер прайс-листов */
@@ -178,10 +181,10 @@ header {
 /* Карточка прайс-листа */
 .card {
     background: var(--card-bg);
-    border: 1px solid var(--border-gold);
+    border: 2px solid var(--border-gold);
     border-radius: 12px;
     padding: 2.5rem;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease;
     position: relative;
     overflow: hidden;
@@ -194,7 +197,7 @@ header {
     left: 0;
     right: 0;
     height: 4px;
-    background: linear-gradient(90deg, var(--primary-gold), var(--secondary-gold), var(--primary-gold));
+    background: linear-gradient(90deg, var(--primary-gold), var(--light-purple), var(--olive-green), var(--primary-gold));
 }
 
 .card:hover {
@@ -213,14 +216,14 @@ header {
 }
 
 .seller-info {
-    color: var(--secondary-gold);
+    color: var(--olive-green);
     font-size: 1.1rem;
-    font-weight: 500;
+    font-weight: 600;
     margin-bottom: 0.5rem;
 }
 
 .seller-phone {
-    color: var(--text-light);
+    color: var(--dark-text);
     font-size: 0.95rem;
     margin-bottom: 1.5rem;
     padding-bottom: 1.5rem;
@@ -228,13 +231,13 @@ header {
 }
 
 .card pre {
-    background: rgba(0, 0, 0, 0.3);
+    background: rgba(184, 164, 201, 0.1);
     padding: 1.5rem;
     border-radius: 8px;
     font-family: 'Courier New', monospace;
     font-size: 0.95rem;
     line-height: 1.8;
-    color: var(--text-light);
+    color: var(--dark-text);
     white-space: pre-wrap;
     border-left: 3px solid var(--primary-gold);
     margin-bottom: 1.5rem;
@@ -262,14 +265,14 @@ header {
 
 .download-btn {
     background: linear-gradient(135deg, #d4af37 0%, #c9a961 100%);
-    color: #0a0a0a;
+    color: white;
     box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
 }
 
 .download-btn:hover {
     transform: translateY(-2px);
     box-shadow: 0 6px 20px rgba(212, 175, 55, 0.5);
-    background: linear-gradient(135deg, #f5f5dc 0%, #d4af37 100%);
+    background: linear-gradient(135deg, #e5c14a 0%, #d4af37 100%);
 }
 
 .delete-btn {
@@ -293,12 +296,12 @@ header {
 
 .auth-card {
     background: var(--card-bg);
-    border: 1px solid var(--border-gold);
+    border: 2px solid var(--border-gold);
     border-radius: 12px;
     padding: 3rem;
     max-width: 500px;
     width: 100%;
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
 }
 
 .auth-header {
@@ -315,7 +318,7 @@ header {
 }
 
 .auth-subtitle {
-    color: var(--text-muted);
+    color: var(--olive-green);
     font-size: 0.95rem;
 }
 
@@ -333,11 +336,11 @@ input, textarea {
     width: 100%;
     padding: 1rem;
     margin-bottom: 1rem;
-    background: rgba(0, 0, 0, 0.4);
+    background: rgba(255, 255, 255, 0.8);
     border: 1px solid var(--border-gold);
     border-radius: 6px;
     font-size: 1rem;
-    color: var(--text-light);
+    color: var(--dark-text);
     font-family: inherit;
     transition: all 0.3s ease;
 }
@@ -349,8 +352,8 @@ input::placeholder, textarea::placeholder {
 input:focus, textarea:focus {
     outline: none;
     border-color: var(--primary-gold);
-    box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1);
-    background: rgba(0, 0, 0, 0.6);
+    box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.15);
+    background: white;
 }
 
 textarea {
@@ -363,7 +366,7 @@ textarea {
 .btn-primary {
     width: 100%;
     background: linear-gradient(135deg, var(--primary-gold) 0%, var(--secondary-gold) 100%);
-    color: var(--dark-bg);
+    color: white;
     border: none;
     padding: 1rem;
     border-radius: 6px;
@@ -379,13 +382,13 @@ textarea {
 .btn-primary:hover {
     transform: translateY(-2px);
     box-shadow: 0 6px 20px var(--shadow-gold);
-    background: linear-gradient(135deg, var(--text-light) 0%, var(--primary-gold) 100%);
+    background: linear-gradient(135deg, #e5c14a 0%, #d4af37 100%);
 }
 
 .btn-logout {
     width: 100%;
     background: linear-gradient(135deg, #8b0000 0%, #a52a2a 100%);
-    color: var(--text-light);
+    color: white;
     border: none;
     padding: 1rem;
     border-radius: 6px;
@@ -423,18 +426,18 @@ textarea {
 }
 
 .auth-footer a:hover {
-    color: var(--text-light);
+    color: var(--olive-green);
 }
 
 .error-message {
-    color: #ff6b6b;
+    color: #dc2626;
     font-weight: 600;
     text-align: center;
     margin-top: 1rem;
     padding: 0.8rem;
-    background: rgba(255, 107, 107, 0.1);
+    background: rgba(220, 38, 38, 0.1);
     border-radius: 6px;
-    border: 1px solid rgba(255, 107, 107, 0.3);
+    border: 1px solid rgba(220, 38, 38, 0.3);
 }
 
 /* Панель управления */
@@ -452,16 +455,16 @@ textarea {
 }
 
 .dashboard-subtitle {
-    color: var(--text-muted);
+    color: var(--olive-green);
     font-size: 1rem;
 }
 
 .dashboard-card {
     background: var(--card-bg);
-    border: 1px solid var(--border-gold);
+    border: 2px solid var(--border-gold);
     border-radius: 12px;
     padding: 2.5rem;
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
     max-width: 700px;
     margin: 0 auto;
 }
