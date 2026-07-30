@@ -5,76 +5,105 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Perfume Hub - Парфюмерный Маркетплейс</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.sheetjs.com/xlsx-0.20.1/package/dist/xlsx.full.min.js"></script>
 </head>
 <body>
 
     <!-- Шапка -->
     <header>
-        <div class="header-left">
-            <div class="logo">
-                <h1 id="logoBtn">✨ Perfume Hub</h1>
-                <p class="tagline">Премиум парфюмерный маркетплейс</p>
+        <div class="header-container">
+            <div class="header-left">
+                <div class="logo">
+                    <h1 id="logoBtn">✨ Perfume Hub</h1>
+                    <p class="tagline">Премиум парфюмерный маркетплейс</p>
+                </div>
             </div>
+            <nav class="header-nav">
+                <button id="loginViewBtn" class="nav-btn">Вход</button>
+                <button id="registerViewBtn" class="nav-btn">Регистрация</button>
+            </nav>
         </div>
-        <nav>
-            <button id="loginViewBtn" class="active">Вход</button>
-            <button id="registerViewBtn">Регистрация</button>
-        </nav>
     </header>
 
     <!-- ГЛАВНАЯ СТРАНИЦА (Прайс-листы) -->
     <main id="buyerSection">
-        <h2>Предложения</h2>
-        <div id="pricelistContainer" class="grid">
-            <!-- Карточки будут добавлены через JavaScript -->
+        <div class="container">
+            <div class="section-header">
+                <h2>Предложения</h2>
+                <p class="section-subtitle">Актуальные прайс-листы от проверенных продавцов</p>
+            </div>
+            <div id="pricelistContainer" class="pricelist-container">
+                <!-- Карточки будут добавлены через JavaScript -->
+            </div>
         </div>
     </main>
 
     <!-- СТРАНИЦА ПРОДАВЦА -->
     <section id="sellerSection" class="hidden">
-        
-        <!-- Форма входа -->
-        <div id="loginForm" class="card auth-card">
-            <h2>Вход для продавцов</h2>
-            <input type="email" id="loginEmailInput" placeholder="Электронная почта" required>
-            <input type="password" id="loginPasswordInput" placeholder="Пароль" required>
-            <div class="btn-group">
-                <button id="loginBtn">Войти</button>
+        <div class="container">
+            
+            <!-- Форма входа -->
+            <div id="loginForm" class="auth-container">
+                <div class="auth-card">
+                    <div class="auth-header">
+                        <h2>Вход для продавцов</h2>
+                        <p class="auth-subtitle">Войдите в свой аккаунт</p>
+                    </div>
+                    <div class="form-content">
+                        <input type="email" id="loginEmailInput" placeholder="Электронная почта" required>
+                        <input type="password" id="loginPasswordInput" placeholder="Пароль" required>
+                        <button id="loginBtn" class="btn-primary">Войти</button>
+                    </div>
+                    <div class="auth-footer">
+                        <p>Нет аккаунта? <a href="#" id="showRegisterBtn">Зарегистрироваться</a></p>
+                        <p id="loginMessage" class="error-message"></p>
+                    </div>
+                </div>
             </div>
-            <p class="login-link">Нет аккаунта? <a href="#" id="showRegisterBtn">Зарегистрироваться</a></p>
-            <p id="loginMessage"></p>
-        </div>
 
-        <!-- Форма регистрации -->
-        <div id="authForm" class="card auth-card hidden">
-            <h2>Регистрация продавца</h2>
-            <div class="form-row">
-                <input type="text" id="nameInput" placeholder="Имя" required>
-                <input type="text" id="surnameInput" placeholder="Фамилия" required>
+            <!-- Форма регистрации -->
+            <div id="authForm" class="auth-container hidden">
+                <div class="auth-card">
+                    <div class="auth-header">
+                        <h2>Регистрация продавца</h2>
+                        <p class="auth-subtitle">Создайте аккаунт для публикации прайс-листов</p>
+                    </div>
+                    <div class="form-content">
+                        <div class="form-row">
+                            <input type="text" id="nameInput" placeholder="Имя" required>
+                            <input type="text" id="surnameInput" placeholder="Фамилия" required>
+                        </div>
+                        <input type="email" id="emailInput" placeholder="Электронная почта" required>
+                        <input type="tel" id="phoneInput" placeholder="Телефон" required>
+                        <input type="password" id="passwordInput" placeholder="Пароль" required>
+                        <input type="password" id="verifyPasswordInput" placeholder="Подтвердите пароль" required>
+                        <button id="registerBtn" class="btn-primary">Зарегистрироваться</button>
+                    </div>
+                    <div class="auth-footer">
+                        <p>Уже есть аккаунт? <a href="#" id="showLoginBtn">Войти</a></p>
+                        <p id="authMessage" class="error-message"></p>
+                    </div>
+                </div>
             </div>
-            <input type="email" id="emailInput" placeholder="Электронная почта" required>
-            <input type="tel" id="phoneInput" placeholder="Телефон" required>
-            <input type="password" id="passwordInput" placeholder="Пароль" required>
-            <input type="password" id="verifyPasswordInput" placeholder="Подтвердите пароль" required>
-            <div class="btn-group">
-                <button id="registerBtn">Зарегистрироваться</button>
-            </div>
-            <p class="login-link">Уже есть аккаунт? <a href="#" id="showLoginBtn">Войти</a></p>
-            <p id="authMessage"></p>
-        </div>
 
-        <!-- Панель продавца (после входа) -->
-        <div id="dashboard" class="hidden">
-            <h2>Добро пожаловать, <span id="sellerName"></span>!</h2>
-            <div class="card">
-                <h3>Опубликовать прайс-лист на сегодня</h3>
-                <textarea id="pricelistInput" placeholder="Введите ваш прайс-лист (например: Chanel No.5: 15000₽, Dior Sauvage: 12000₽)"></textarea>
-                <button id="postPricelistBtn">Опубликовать прайс-лист</button>
+            <!-- Панель продавца (после входа) -->
+            <div id="dashboard" class="hidden">
+                <div class="dashboard-header">
+                    <h2>Добро пожаловать, <span id="sellerName"></span>!</h2>
+                    <p class="dashboard-subtitle">Управляйте своими прайс-листами</p>
+                </div>
+                <div class="dashboard-card">
+                    <h3>Опубликовать прайс-лист на сегодня</h3>
+                    <textarea id="pricelistInput" placeholder="Введите ваш прайс-лист (например: Chanel No.5: 15000₽, Dior Sauvage: 12000₽)"></textarea>
+                    <button id="postPricelistBtn" class="btn-primary">Опубликовать прайс-лист</button>
+                </div>
+                <button id="logoutBtn" class="btn-logout">Выйти</button>
             </div>
-            <button id="logoutBtn" class="logout">Выйти</button>
-        </div>
 
+        </div>
     </section>
 
     <script src="app.js"></script>
