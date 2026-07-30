@@ -40,7 +40,7 @@ function resetNavButtons() {
     registerViewBtn.classList.remove('active');
 }
 
-// --- ПЕРЕКЛЮЧЕНИЕ НА ГЛАВНУЮ ---
+// --- ПЕРЕКЛЮЧЕНИЕ НА ГЛАВНУЮ (при клике на скрытую кнопку) ---
 homeViewBtn.addEventListener('click', () => {
     buyerSection.classList.remove('hidden');
     sellerSection.classList.add('hidden');
