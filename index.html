@@ -1,54 +1,75 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Daily Marketplace</title>
+    <title>Perfume Hub - Парфюмерный Маркетплейс</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <!-- Header -->
+    <!-- Шапка -->
     <header>
-        <h1>🛒 Daily Marketplace</h1>
+        <div class="logo">
+            <h1>✨ Perfume Hub</h1>
+            <p class="tagline">Премиум парфюмерный маркетплейс</p>
+        </div>
         <nav>
-            <button id="buyerViewBtn" class="active">Buyer View</button>
-            <button id="sellerViewBtn">Seller Login</button>
+            <button id="homeViewBtn" class="active">Главная</button>
+            <button id="sellerViewBtn">Регистрация продавца</button>
         </nav>
     </header>
 
-    <!-- BUYER VIEW (Public) -->
+    <!-- ГЛАВНАЯ СТРАНИЦА (Прайс-листы) -->
     <main id="buyerSection">
-        <h2>Today's Pricelists</h2>
+        <h2>Сегодняшние предложения</h2>
         <div id="pricelistContainer" class="grid">
-            <!-- Pricelists will be injected here by JS -->
+            <!-- Карточки будут добавлены через JavaScript -->
         </div>
     </main>
 
-    <!-- SELLER VIEW (Private) -->
+    <!-- СТРАНИЦА ПРОДАВЦА -->
     <section id="sellerSection" class="hidden">
         
-        <!-- Login/Register Form -->
-        <div id="authForm" class="card">
-            <h2>Seller Portal</h2>
-            <input type="email" id="emailInput" placeholder="Email" required>
-            <input type="password" id="passwordInput" placeholder="Password" required>
-            <div class="btn-group">
-                <button id="loginBtn">Login</button>
-                <button id="registerBtn">Register</button>
+        <!-- Форма регистрации -->
+        <div id="authForm" class="card auth-card">
+            <h2>Регистрация продавца</h2>
+            <div class="form-row">
+                <input type="text" id="nameInput" placeholder="Имя" required>
+                <input type="text" id="surnameInput" placeholder="Фамилия" required>
             </div>
+            <input type="email" id="emailInput" placeholder="Электронная почта" required>
+            <input type="tel" id="phoneInput" placeholder="Телефон" required>
+            <input type="password" id="passwordInput" placeholder="Пароль" required>
+            <input type="password" id="verifyPasswordInput" placeholder="Подтвердите пароль" required>
+            <div class="btn-group">
+                <button id="registerBtn">Зарегистрироваться</button>
+            </div>
+            <p class="login-link">Уже есть аккаунт? <a href="#" id="showLoginBtn">Войти</a></p>
             <p id="authMessage"></p>
         </div>
 
-        <!-- Seller Dashboard (Shown after login) -->
-        <div id="dashboard" class="hidden">
-            <h2>Welcome, <span id="sellerName"></span>!</h2>
-            <div class="card">
-                <h3>Post Today's Pricelist</h3>
-                <textarea id="pricelistInput" placeholder="Enter your pricelist (e.g., Apples: $1, Bananas: $2)"></textarea>
-                <button id="postPricelistBtn">Publish Pricelist</button>
+        <!-- Форма входа -->
+        <div id="loginForm" class="card auth-card hidden">
+            <h2>Вход для продавцов</h2>
+            <input type="email" id="loginEmailInput" placeholder="Электронная почта" required>
+            <input type="password" id="loginPasswordInput" placeholder="Пароль" required>
+            <div class="btn-group">
+                <button id="loginBtn">Войти</button>
             </div>
-            <button id="logoutBtn" class="logout">Logout</button>
+            <p class="login-link">Нет аккаунта? <a href="#" id="showRegisterBtn">Зарегистрироваться</a></p>
+            <p id="loginMessage"></p>
+        </div>
+
+        <!-- Панель продавца (после входа) -->
+        <div id="dashboard" class="hidden">
+            <h2>Добро пожаловать, <span id="sellerName"></span>!</h2>
+            <div class="card">
+                <h3>Опубликовать прайс-лист на сегодня</h3>
+                <textarea id="pricelistInput" placeholder="Введите ваш прайс-лист (например: Chanel No.5: 15000₽, Dior Sauvage: 12000₽)"></textarea>
+                <button id="postPricelistBtn">Опубликовать прайс-лист</button>
+            </div>
+            <button id="logoutBtn" class="logout">Выйти</button>
         </div>
 
     </section>
