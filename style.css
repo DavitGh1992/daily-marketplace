@@ -167,6 +167,49 @@ h2 {
     color: #f5f5dc;
     white-space: pre-wrap;
     border-left: 3px solid #d4af37;
+    margin-bottom: 1rem;
+}
+
+/* Кнопки действий на карточке */
+.card-actions {
+    display: flex;
+    gap: 0.8rem;
+    margin-top: 1rem;
+}
+
+.download-btn, .delete-btn {
+    flex: 1;
+    padding: 0.7rem 1rem;
+    border: none;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: inherit;
+    letter-spacing: 0.5px;
+}
+
+.download-btn {
+    background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+    color: white;
+    box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
+}
+
+.download-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(37, 99, 235, 0.5);
+}
+
+.delete-btn {
+    background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
+    color: white;
+    box-shadow: 0 4px 15px rgba(220, 38, 38, 0.3);
+}
+
+.delete-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(220, 38, 38, 0.5);
 }
 
 /* Формы */
@@ -334,5 +377,9 @@ button:hover {
     
     h2 {
         font-size: 1.8rem;
+    }
+    
+    .card-actions {
+        flex-direction: column;
     }
 }
