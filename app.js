@@ -24,8 +24,9 @@ const registeredUsers = [
 ];
 
 // --- ХРАНИЛИЩЕ ПРАЙС-ЛИСТОВ (в памяти) ---
-const pricelists = [
+let pricelists = [
     { 
+        userEmail: "alex@example.com",
         name: "Александр",
         surname: "Петров",
         phone: "+7 (999) 123-45-67",
@@ -33,6 +34,7 @@ const pricelists = [
         items: "Chanel No.5: 15000₽\nDior Sauvage: 12000₽\nTom Ford Black Orchid: 18000₽" 
     },
     { 
+        userEmail: "elena@example.com",
         name: "Елена",
         surname: "Смирнова",
         phone: "+7 (999) 234-56-78",
@@ -40,6 +42,7 @@ const pricelists = [
         items: "YSL Libre: 11000₽\nVersace Eros: 9500₽\nGucci Bloom: 10500₽" 
     },
     { 
+        userEmail: "mikhail@example.com",
         name: "Михаил",
         surname: "Иванов",
         phone: "+7 (999) 345-67-89",
@@ -61,11 +64,24 @@ const pricelistContainer = document.getElementById('pricelistContainer');
 const authForm = document.getElementById('authForm');
 const loginForm = document.getElementById('loginForm');
 const dashboard = document.getElementById('dashboard');
+const pricelistInput = document.getElementById('pricelistInput');
 
 // --- ФУНКЦИЯ СБРОСА АКТИВНЫХ КНОПОК ---
 function resetNavButtons() {
     loginViewBtn.classList.remove('active');
     registerViewBtn.classList.remove('active');
+}
+
+// --- ФУНКЦИЯ УДАЛЕНИЯ СТАРЫХ ПРАЙС-ЛИСТОВ (старше 7 дней) ---
+function removeOldPricelists() {
+    const today = new Date();
+    const sevenDaysAgo = new Date(today);
+    sevenDaysAgo.setDate(today.getDate() - 7);
+    
+    pricelists = pricelists.filter(list => {
+        const listDate = new Date(list.date);
+        return listDate >= sevenDaysAgo;
+    });
 }
 
 // --- ПЕРЕКЛЮЧЕНИЕ НА ГЛАВНУЮ (при клике на логотип) ---
@@ -81,7 +97,6 @@ loginViewBtn.addEventListener('click', () => {
     sellerSection.classList.remove('hidden');
     resetNavButtons();
     loginViewBtn.classList.add('active');
-    // Показываем форму входа
     loginForm.classList.remove('hidden');
     authForm.classList.add('hidden');
     dashboard.classList.add('hidden');
@@ -93,13 +108,12 @@ registerViewBtn.addEventListener('click', () => {
     sellerSection.classList.remove('hidden');
     resetNavButtons();
     registerViewBtn.classList.add('active');
-    // Показываем форму регистрации
     authForm.classList.remove('hidden');
     loginForm.classList.add('hidden');
     dashboard.classList.add('hidden');
 });
 
-// --- ПЕРЕКЛЮЧЕНИЕ МЕЖДУ ФОРМАМИ (по ссылкам внутри форм) ---
+// --- ПЕРЕКЛЮЧЕНИЕ МЕЖДУ ФОРМАМИ ---
 document.getElementById('showLoginBtn').addEventListener('click', (e) => {
     e.preventDefault();
     authForm.classList.add('hidden');
@@ -116,8 +130,11 @@ document.getElementById('showRegisterBtn').addEventListener('click', (e) => {
     registerViewBtn.classList.add('active');
 });
 
-// --- ОТОБРАЖЕНИЕ ПРАЙС-ЛИСТОВ (отсортированных по дате, новые сверху) ---
+// --- ОТОБРАЖЕНИЕ ПРАЙС-ЛИСТОВ ---
 function renderPricelists() {
+    // Удаляем старые прайс-листы перед отображением
+    removeOldPricelists();
+    
     pricelistContainer.innerHTML = '';
     
     // Сортируем прайс-листы по дате (новые сверху)
@@ -125,17 +142,90 @@ function renderPricelists() {
         return new Date(b.date) - new Date(a.date);
     });
     
-    sortedPricelists.forEach(list => {
+    sortedPricelists.forEach((list, index) => {
         const card = document.createElement('div');
         card.className = 'card';
+        
+        // Проверяем, принадлежит ли этот прайс-лист текущему пользователю
+        const isOwner = currentUser && currentUser.email === list.userEmail;
+        
         card.innerHTML = `
             <h3>Прайс-лист</h3>
             <p class="seller-info">${list.name} ${list.surname}</p>
             <p class="seller-phone">📞 ${list.phone}</p>
             <pre>${list.items}</pre>
+            <div class="card-actions">
+                <button class="download-btn" data-index="${index}">📥 Скачать Excel</button>
+                ${isOwner ? `<button class="delete-btn" data-index="${index}">🗑️ Удалить</button>` : ''}
+            </div>
         `;
         pricelistContainer.appendChild(card);
     });
+    
+    // Добавляем обработчики событий для кнопок
+    document.querySelectorAll('.download-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const index = parseInt(e.target.getAttribute('data-index'));
+            downloadPricelist(sortedPricelists[index]);
+        });
+    });
+    
+    document.querySelectorAll('.delete-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const index = parseInt(e.target.getAttribute('data-index'));
+            deletePricelist(sortedPricelists[index]);
+        });
+    });
+}
+
+// --- ФУНКЦИЯ СКАЧИВАНИЯ ПРАЙС-ЛИСТА В EXCEL ---
+function downloadPricelist(pricelist) {
+    // Разбиваем текст прайс-листа на строки
+    const items = pricelist.items.split('\n').filter(line => line.trim() !== '');
+    
+    // Создаём данные для Excel
+    const data = [
+        ['ПРАЙС-ЛИСТ'],
+        [''],
+        ['Продавец:', `${pricelist.name} ${pricelist.surname}`],
+        ['Телефон:', pricelist.phone],
+        ['Дата:', pricelist.date],
+        [''],
+        ['Товар', 'Цена'],
+        // Разбиваем каждую строку на товар и цену
+        ...items.map(item => {
+            const parts = item.split(':');
+            if (parts.length >= 2) {
+                return [parts[0].trim(), parts.slice(1).join(':').trim()];
+            }
+            return [item.trim(), ''];
+        })
+    ];
+    
+    // Создаём рабочий лист
+    const ws = XLSX.utils.aoa_to_sheet(data);
+    
+    // Устанавливаем ширину колонок
+    ws['!cols'] = [{ wch: 30 }, { wch: 20 }];
+    
+    // Создаём рабочую книгу
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Прайс-лист");
+    
+    // Скачиваем файл
+    const filename = `Прайс-лист_${pricelist.name}_${pricelist.surname}_${pricelist.date}.xlsx`;
+    XLSX.writeFile(wb, filename);
+}
+
+// --- ФУНКЦИЯ УДАЛЕНИЯ ПРАЙС-ЛИСТА ---
+function deletePricelist(pricelistToDelete) {
+    if (!confirm('Вы уверены, что хотите удалить этот прайс-лист?')) {
+        return;
+    }
+    
+    pricelists = pricelists.filter(list => list !== pricelistToDelete);
+    renderPricelists();
+    alert('Прайс-лист успешно удалён');
 }
 
 // --- РЕГИСТРАЦИЯ НОВОГО ПОЛЬЗОВАТЕЛЯ ---
@@ -147,32 +237,27 @@ document.getElementById('registerBtn').addEventListener('click', () => {
     const password = document.getElementById('passwordInput').value;
     const verifyPassword = document.getElementById('verifyPasswordInput').value;
     
-    // Проверка заполнения всех полей
     if (!name || !surname || !email || !phone || !password || !verifyPassword) {
         document.getElementById('authMessage').textContent = 'Пожалуйста, заполните все поля';
         return;
     }
     
-    // Проверка совпадения паролей
     if (password !== verifyPassword) {
         document.getElementById('authMessage').textContent = 'Пароли не совпадают';
         return;
     }
     
-    // Проверка длины пароля
     if (password.length < 6) {
         document.getElementById('authMessage').textContent = 'Пароль должен содержать минимум 6 символов';
         return;
     }
     
-    // Проверка, не зарегистрирован ли уже этот email
     const existingUser = registeredUsers.find(user => user.email === email);
     if (existingUser) {
         document.getElementById('authMessage').textContent = 'Пользователь с таким email уже зарегистрирован';
         return;
     }
     
-    // Добавляем нового пользователя
     const newUser = {
         name: name,
         surname: surname,
@@ -183,7 +268,6 @@ document.getElementById('registerBtn').addEventListener('click', () => {
     
     registeredUsers.push(newUser);
     
-    // Очищаем форму и сообщения
     document.getElementById('nameInput').value = '';
     document.getElementById('surnameInput').value = '';
     document.getElementById('emailInput').value = '';
@@ -194,7 +278,6 @@ document.getElementById('registerBtn').addEventListener('click', () => {
     
     alert(`Регистрация успешна!\n\nДобро пожаловать, ${name} ${surname}!\nТеперь вы можете войти в систему.`);
     
-    // Переключаемся на форму входа
     authForm.classList.add('hidden');
     loginForm.classList.remove('hidden');
     resetNavButtons();
@@ -206,13 +289,11 @@ document.getElementById('loginBtn').addEventListener('click', () => {
     const email = document.getElementById('loginEmailInput').value;
     const password = document.getElementById('loginPasswordInput').value;
     
-    // Проверка заполнения полей
     if (!email || !password) {
         document.getElementById('loginMessage').textContent = 'Пожалуйста, введите email и пароль';
         return;
     }
     
-    // Поиск пользователя в базе зарегистрированных
     const user = registeredUsers.find(u => u.email === email && u.password === password);
     
     if (!user) {
@@ -220,25 +301,25 @@ document.getElementById('loginBtn').addEventListener('click', () => {
         return;
     }
     
-    // Успешный вход
     currentUser = user;
     
-    // Очищаем форму входа и сообщения
     document.getElementById('loginEmailInput').value = '';
     document.getElementById('loginPasswordInput').value = '';
     document.getElementById('loginMessage').textContent = '';
     
-    // Показываем панель продавца
     loginForm.classList.add('hidden');
     authForm.classList.add('hidden');
     dashboard.classList.remove('hidden');
     document.getElementById('sellerName').textContent = `${user.name} ${user.surname}`;
     resetNavButtons();
+    
+    // Перерисовываем прайс-листы, чтобы показать кнопки удаления для владельца
+    renderPricelists();
 });
 
 // --- ПУБЛИКАЦИЯ ПРАЙС-ЛИСТА ---
 document.getElementById('postPricelistBtn').addEventListener('click', () => {
-    const text = document.getElementById('pricelistInput').value;
+    const text = pricelistInput.value;
     
     if (!text) {
         alert('Пожалуйста, введите прайс-лист');
@@ -250,11 +331,10 @@ document.getElementById('postPricelistBtn').addEventListener('click', () => {
         return;
     }
     
-    // Получаем текущую дату
     const today = new Date().toISOString().split('T')[0];
     
-    // Создаём новый прайс-лист
     const newPricelist = {
+        userEmail: currentUser.email,
         name: currentUser.name,
         surname: currentUser.surname,
         phone: currentUser.phone,
@@ -262,15 +342,12 @@ document.getElementById('postPricelistBtn').addEventListener('click', () => {
         items: text
     };
     
-    // Добавляем в массив прайс-листов
     pricelists.push(newPricelist);
     
-    // Очищаем поле ввода
-    document.getElementById('pricelistInput').value = '';
+    pricelistInput.value = '';
     
     alert('Прайс-лист успешно опубликован!');
     
-    // Обновляем отображение прайс-листов на главной странице
     renderPricelists();
 });
 
@@ -282,6 +359,9 @@ document.getElementById('logoutBtn').addEventListener('click', () => {
     document.getElementById('sellerName').textContent = '';
     resetNavButtons();
     loginViewBtn.classList.add('active');
+    
+    // Перерисовываем прайс-листы, чтобы скрыть кнопки удаления
+    renderPricelists();
 });
 
 // Инициализация
