@@ -24,7 +24,7 @@ const mockPricelists = [
 ];
 
 // --- ЭЛЕМЕНТЫ ИНТЕРФЕЙСА ---
-const homeViewBtn = document.getElementById('homeViewBtn');
+const logoBtn = document.getElementById('logoBtn');
 const loginViewBtn = document.getElementById('loginViewBtn');
 const registerViewBtn = document.getElementById('registerViewBtn');
 const buyerSection = document.getElementById('buyerSection');
@@ -40,8 +40,8 @@ function resetNavButtons() {
     registerViewBtn.classList.remove('active');
 }
 
-// --- ПЕРЕКЛЮЧЕНИЕ НА ГЛАВНУЮ (при клике на скрытую кнопку) ---
-homeViewBtn.addEventListener('click', () => {
+// --- ПЕРЕКЛЮЧЕНИЕ НА ГЛАВНУЮ (при клике на логотип) ---
+logoBtn.addEventListener('click', () => {
     buyerSection.classList.remove('hidden');
     sellerSection.classList.add('hidden');
     resetNavButtons();
