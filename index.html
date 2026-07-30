@@ -15,8 +15,8 @@
             <p class="tagline">Премиум парфюмерный маркетплейс</p>
         </div>
         <nav>
-            <button id="homeViewBtn" class="active">Главная</button>
-            <button id="sellerViewBtn">Регистрация продавца</button>
+            <button id="loginViewBtn" class="active">Вход</button>
+            <button id="registerViewBtn">Регистрация</button>
         </nav>
     </header>
 
@@ -31,8 +31,20 @@
     <!-- СТРАНИЦА ПРОДАВЦА -->
     <section id="sellerSection" class="hidden">
         
+        <!-- Форма входа -->
+        <div id="loginForm" class="card auth-card">
+            <h2>Вход для продавцов</h2>
+            <input type="email" id="loginEmailInput" placeholder="Электронная почта" required>
+            <input type="password" id="loginPasswordInput" placeholder="Пароль" required>
+            <div class="btn-group">
+                <button id="loginBtn">Войти</button>
+            </div>
+            <p class="login-link">Нет аккаунта? <a href="#" id="showRegisterBtn">Зарегистрироваться</a></p>
+            <p id="loginMessage"></p>
+        </div>
+
         <!-- Форма регистрации -->
-        <div id="authForm" class="card auth-card">
+        <div id="authForm" class="card auth-card hidden">
             <h2>Регистрация продавца</h2>
             <div class="form-row">
                 <input type="text" id="nameInput" placeholder="Имя" required>
@@ -47,18 +59,6 @@
             </div>
             <p class="login-link">Уже есть аккаунт? <a href="#" id="showLoginBtn">Войти</a></p>
             <p id="authMessage"></p>
-        </div>
-
-        <!-- Форма входа -->
-        <div id="loginForm" class="card auth-card hidden">
-            <h2>Вход для продавцов</h2>
-            <input type="email" id="loginEmailInput" placeholder="Электронная почта" required>
-            <input type="password" id="loginPasswordInput" placeholder="Пароль" required>
-            <div class="btn-group">
-                <button id="loginBtn">Войти</button>
-            </div>
-            <p class="login-link">Нет аккаунта? <a href="#" id="showRegisterBtn">Зарегистрироваться</a></p>
-            <p id="loginMessage"></p>
         </div>
 
         <!-- Панель продавца (после входа) -->
