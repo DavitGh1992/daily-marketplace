@@ -7,11 +7,13 @@
 :root {
     --primary-gold: #d4af37;
     --secondary-gold: #c9a961;
-    --light-purple: #b8a4c9;
-    --olive-green: #8b9a7b;
-    --dark-text: #2d2d2d;
-    --card-bg: rgba(255, 255, 255, 0.95);
-    --text-muted: #666;
+    --dark-purple: #1a0f2e;
+    --medium-purple: #3d2954;
+    --light-purple: #5c3d6e;
+    --accent-purple: #7b5a8f;
+    --text-light: #f5f0fa;
+    --text-muted: #a89bb5;
+    --card-bg: rgba(45, 27, 61, 0.85);
     --border-gold: rgba(212, 175, 55, 0.4);
     --shadow-gold: rgba(212, 175, 55, 0.3);
 }
@@ -19,13 +21,13 @@
 body {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     background: 
-        radial-gradient(ellipse at top left, rgba(184, 164, 201, 0.4) 0%, transparent 50%),
-        radial-gradient(ellipse at bottom right, rgba(139, 154, 123, 0.4) 0%, transparent 50%),
-        radial-gradient(ellipse at center, rgba(212, 175, 55, 0.15) 0%, transparent 60%),
-        linear-gradient(135deg, #f5f0f7 0%, #e8e5e0 50%, #f0ede5 100%);
+        radial-gradient(ellipse at top left, rgba(92, 61, 110, 0.3) 0%, transparent 50%),
+        radial-gradient(ellipse at bottom right, rgba(123, 90, 143, 0.25) 0%, transparent 50%),
+        radial-gradient(ellipse at center, rgba(61, 41, 84, 0.4) 0%, transparent 60%),
+        linear-gradient(135deg, #1a0f2e 0%, #2d1b3d 30%, #3d2954 60%, #5c3d6e 100%);
     background-attachment: fixed;
     min-height: 100vh;
-    color: var(--dark-text);
+    color: var(--text-light);
     line-height: 1.6;
     position: relative;
 }
@@ -42,8 +44,8 @@ body::before {
             0deg,
             transparent,
             transparent 2px,
-            rgba(212, 175, 55, 0.03) 2px,
-            rgba(212, 175, 55, 0.03) 4px
+            rgba(212, 175, 55, 0.02) 2px,
+            rgba(212, 175, 55, 0.02) 4px
         );
     pointer-events: none;
     z-index: 0;
@@ -57,8 +59,8 @@ body::after {
     width: 100%;
     height: 100%;
     background: 
-        radial-gradient(circle at 20% 30%, rgba(184, 164, 201, 0.2) 0%, transparent 40%),
-        radial-gradient(circle at 80% 70%, rgba(139, 154, 123, 0.2) 0%, transparent 40%);
+        radial-gradient(circle at 20% 30%, rgba(123, 90, 143, 0.15) 0%, transparent 40%),
+        radial-gradient(circle at 80% 70%, rgba(92, 61, 110, 0.15) 0%, transparent 40%);
     pointer-events: none;
     z-index: 0;
 }
@@ -77,13 +79,13 @@ header, main, section, .container {
 
 /* Шапка */
 header {
-    background: rgba(255, 255, 255, 0.85);
+    background: rgba(26, 15, 46, 0.95);
     backdrop-filter: blur(10px);
     border-bottom: 2px solid var(--primary-gold);
     position: sticky;
     top: 0;
     z-index: 1000;
-    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
 }
 
 .header-container {
@@ -109,15 +111,16 @@ header {
     cursor: pointer;
     transition: all 0.3s ease;
     margin: 0;
+    text-shadow: 0 2px 10px rgba(212, 175, 55, 0.3);
 }
 
 .logo h1:hover {
-    color: var(--olive-green);
+    color: var(--text-light);
     text-shadow: 0 0 20px var(--shadow-gold);
 }
 
 .tagline {
-    color: var(--olive-green);
+    color: var(--accent-purple);
     font-size: 0.85rem;
     font-style: italic;
     margin-top: 0.2rem;
@@ -145,7 +148,7 @@ header {
 
 .nav-btn:hover {
     background: var(--primary-gold);
-    color: white;
+    color: var(--dark-purple);
     box-shadow: 0 4px 15px var(--shadow-gold);
 }
 
@@ -162,13 +165,13 @@ header {
     font-weight: 600;
     letter-spacing: 2px;
     margin-bottom: 0.5rem;
-    text-shadow: 0 2px 10px rgba(212, 175, 55, 0.2);
+    text-shadow: 0 2px 15px rgba(212, 175, 55, 0.3);
 }
 
 .section-subtitle {
-    color: var(--olive-green);
+    color: var(--text-muted);
     font-size: 1rem;
-    font-weight: 400;
+    font-weight: 300;
 }
 
 /* Контейнер прайс-листов */
@@ -184,10 +187,11 @@ header {
     border: 2px solid var(--border-gold);
     border-radius: 12px;
     padding: 2.5rem;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
     transition: all 0.3s ease;
     position: relative;
     overflow: hidden;
+    backdrop-filter: blur(10px);
 }
 
 .card::before {
@@ -197,13 +201,14 @@ header {
     left: 0;
     right: 0;
     height: 4px;
-    background: linear-gradient(90deg, var(--primary-gold), var(--light-purple), var(--olive-green), var(--primary-gold));
+    background: linear-gradient(90deg, var(--primary-gold), var(--accent-purple), var(--primary-gold));
 }
 
 .card:hover {
     transform: translateY(-4px);
     box-shadow: 0 8px 30px var(--shadow-gold);
     border-color: var(--primary-gold);
+    background: rgba(61, 41, 84, 0.9);
 }
 
 .card h3 {
@@ -216,14 +221,14 @@ header {
 }
 
 .seller-info {
-    color: var(--olive-green);
+    color: var(--accent-purple);
     font-size: 1.1rem;
     font-weight: 600;
     margin-bottom: 0.5rem;
 }
 
 .seller-phone {
-    color: var(--dark-text);
+    color: var(--text-light);
     font-size: 0.95rem;
     margin-bottom: 1.5rem;
     padding-bottom: 1.5rem;
@@ -231,13 +236,13 @@ header {
 }
 
 .card pre {
-    background: rgba(184, 164, 201, 0.1);
+    background: rgba(26, 15, 46, 0.5);
     padding: 1.5rem;
     border-radius: 8px;
     font-family: 'Courier New', monospace;
     font-size: 0.95rem;
     line-height: 1.8;
-    color: var(--dark-text);
+    color: var(--text-light);
     white-space: pre-wrap;
     border-left: 3px solid var(--primary-gold);
     margin-bottom: 1.5rem;
@@ -265,7 +270,7 @@ header {
 
 .download-btn {
     background: linear-gradient(135deg, #d4af37 0%, #c9a961 100%);
-    color: white;
+    color: var(--dark-purple);
     box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
 }
 
@@ -301,7 +306,8 @@ header {
     padding: 3rem;
     max-width: 500px;
     width: 100%;
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(10px);
 }
 
 .auth-header {
@@ -318,7 +324,7 @@ header {
 }
 
 .auth-subtitle {
-    color: var(--olive-green);
+    color: var(--text-muted);
     font-size: 0.95rem;
 }
 
@@ -336,11 +342,11 @@ input, textarea {
     width: 100%;
     padding: 1rem;
     margin-bottom: 1rem;
-    background: rgba(255, 255, 255, 0.8);
+    background: rgba(26, 15, 46, 0.6);
     border: 1px solid var(--border-gold);
     border-radius: 6px;
     font-size: 1rem;
-    color: var(--dark-text);
+    color: var(--text-light);
     font-family: inherit;
     transition: all 0.3s ease;
 }
@@ -352,8 +358,8 @@ input::placeholder, textarea::placeholder {
 input:focus, textarea:focus {
     outline: none;
     border-color: var(--primary-gold);
-    box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.15);
-    background: white;
+    box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.2);
+    background: rgba(45, 27, 61, 0.8);
 }
 
 textarea {
@@ -366,7 +372,7 @@ textarea {
 .btn-primary {
     width: 100%;
     background: linear-gradient(135deg, var(--primary-gold) 0%, var(--secondary-gold) 100%);
-    color: white;
+    color: var(--dark-purple);
     border: none;
     padding: 1rem;
     border-radius: 6px;
@@ -426,18 +432,18 @@ textarea {
 }
 
 .auth-footer a:hover {
-    color: var(--olive-green);
+    color: var(--accent-purple);
 }
 
 .error-message {
-    color: #dc2626;
+    color: #ff6b6b;
     font-weight: 600;
     text-align: center;
     margin-top: 1rem;
     padding: 0.8rem;
-    background: rgba(220, 38, 38, 0.1);
+    background: rgba(255, 107, 107, 0.15);
     border-radius: 6px;
-    border: 1px solid rgba(220, 38, 38, 0.3);
+    border: 1px solid rgba(255, 107, 107, 0.4);
 }
 
 /* Панель управления */
@@ -455,7 +461,7 @@ textarea {
 }
 
 .dashboard-subtitle {
-    color: var(--olive-green);
+    color: var(--text-muted);
     font-size: 1rem;
 }
 
@@ -464,9 +470,10 @@ textarea {
     border: 2px solid var(--border-gold);
     border-radius: 12px;
     padding: 2.5rem;
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
     max-width: 700px;
     margin: 0 auto;
+    backdrop-filter: blur(10px);
 }
 
 .dashboard-card h3 {
