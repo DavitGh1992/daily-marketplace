@@ -24,6 +24,7 @@ const mockPricelists = [
 ];
 
 // --- ЭЛЕМЕНТЫ ИНТЕРФЕЙСА ---
+const homeViewBtn = document.getElementById('homeViewBtn');
 const loginViewBtn = document.getElementById('loginViewBtn');
 const registerViewBtn = document.getElementById('registerViewBtn');
 const buyerSection = document.getElementById('buyerSection');
@@ -33,42 +34,58 @@ const authForm = document.getElementById('authForm');
 const loginForm = document.getElementById('loginForm');
 const dashboard = document.getElementById('dashboard');
 
-// --- ПЕРЕКЛЮЧЕНИЕ ВКЛАДОК ---
-loginViewBtn.addEventListener('click', () => {
+// --- ФУНКЦИЯ СБРОСА АКТИВНЫХ КНОПОК ---
+function resetNavButtons() {
+    loginViewBtn.classList.remove('active');
+    registerViewBtn.classList.remove('active');
+}
+
+// --- ПЕРЕКЛЮЧЕНИЕ НА ГЛАВНУЮ ---
+homeViewBtn.addEventListener('click', () => {
     buyerSection.classList.remove('hidden');
     sellerSection.classList.add('hidden');
-    loginViewBtn.classList.add('active');
-    registerViewBtn.classList.remove('active');
+    resetNavButtons();
 });
 
+// --- ПЕРЕКЛЮЧЕНИЕ НА ВХОД ---
+loginViewBtn.addEventListener('click', () => {
+    buyerSection.classList.add('hidden');
+    sellerSection.classList.remove('hidden');
+    resetNavButtons();
+    loginViewBtn.classList.add('active');
+    // Показываем форму входа
+    loginForm.classList.remove('hidden');
+    authForm.classList.add('hidden');
+    dashboard.classList.add('hidden');
+});
+
+// --- ПЕРЕКЛЮЧЕНИЕ НА РЕГИСТРАЦИЮ ---
 registerViewBtn.addEventListener('click', () => {
     buyerSection.classList.add('hidden');
     sellerSection.classList.remove('hidden');
+    resetNavButtons();
     registerViewBtn.classList.add('active');
-    loginViewBtn.classList.remove('active');
     // Показываем форму регистрации
     authForm.classList.remove('hidden');
     loginForm.classList.add('hidden');
     dashboard.classList.add('hidden');
 });
 
-// --- ПЕРЕКЛЮЧЕНИЕ МЕЖДУ РЕГИСТРАЦИЕЙ И ВХОДОМ ---
+// --- ПЕРЕКЛЮЧЕНИЕ МЕЖДУ ФОРМАМИ (по ссылкам внутри форм) ---
 document.getElementById('showLoginBtn').addEventListener('click', (e) => {
     e.preventDefault();
     authForm.classList.add('hidden');
     loginForm.classList.remove('hidden');
-    // Обновляем активную кнопку в навигации
+    resetNavButtons();
     loginViewBtn.classList.add('active');
-    registerViewBtn.classList.remove('active');
 });
 
 document.getElementById('showRegisterBtn').addEventListener('click', (e) => {
     e.preventDefault();
     loginForm.classList.add('hidden');
     authForm.classList.remove('hidden');
-    // Обновляем активную кнопку в навигации
+    resetNavButtons();
     registerViewBtn.classList.add('active');
-    loginViewBtn.classList.remove('active');
 });
 
 // --- ОТОБРАЖЕНИЕ ПРАЙС-ЛИСТОВ ---
@@ -96,7 +113,6 @@ document.getElementById('registerBtn').addEventListener('click', () => {
     const password = document.getElementById('passwordInput').value;
     const verifyPassword = document.getElementById('verifyPasswordInput').value;
     
-    // Простая валидация
     if (!name || !surname || !email || !phone || !password || !verifyPassword) {
         document.getElementById('authMessage').textContent = 'Пожалуйста, заполните все поля';
         return;
@@ -112,7 +128,6 @@ document.getElementById('registerBtn').addEventListener('click', () => {
         return;
     }
     
-    // Демо: показываем что регистрация прошла успешно
     alert(`Регистрация успешна!\n\nИмя: ${name} ${surname}\nEmail: ${email}\nТелефон: ${phone}`);
     
     // Очищаем форму
@@ -127,8 +142,8 @@ document.getElementById('registerBtn').addEventListener('click', () => {
     // Переключаемся на форму входа
     authForm.classList.add('hidden');
     loginForm.classList.remove('hidden');
+    resetNavButtons();
     loginViewBtn.classList.add('active');
-    registerViewBtn.classList.remove('active');
 });
 
 document.getElementById('loginBtn').addEventListener('click', () => {
@@ -145,6 +160,7 @@ document.getElementById('loginBtn').addEventListener('click', () => {
     authForm.classList.add('hidden');
     dashboard.classList.remove('hidden');
     document.getElementById('sellerName').textContent = 'Продавец';
+    resetNavButtons();
 });
 
 document.getElementById('postPricelistBtn').addEventListener('click', () => {
@@ -161,9 +177,8 @@ document.getElementById('logoutBtn').addEventListener('click', () => {
     dashboard.classList.add('hidden');
     loginForm.classList.remove('hidden');
     document.getElementById('sellerName').textContent = '';
-    // Обновляем навигацию
+    resetNavButtons();
     loginViewBtn.classList.add('active');
-    registerViewBtn.classList.remove('active');
 });
 
 // Инициализация
