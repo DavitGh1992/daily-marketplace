@@ -28,7 +28,6 @@ header {
     display: flex;
     flex-direction: column;
     gap: 0;
-    position: relative;
 }
 
 .logo h1 {
@@ -41,8 +40,9 @@ header {
     transition: all 0.3s ease;
 }
 
-.logo:hover h1 {
+.logo h1:hover {
     text-shadow: 0 2px 20px rgba(212, 175, 55, 0.6);
+    transform: scale(1.02);
 }
 
 .tagline {
@@ -50,45 +50,6 @@ header {
     font-size: 0.9rem;
     font-style: italic;
     margin-top: 0.3rem;
-}
-
-/* Скрытая кнопка Главная */
-.home-btn {
-    background: transparent;
-    color: #d4af37;
-    border: 2px solid #d4af37;
-    padding: 0.6rem 1.5rem;
-    border-radius: 3px;
-    cursor: pointer;
-    font-size: 0.95rem;
-    font-weight: 600;
-    letter-spacing: 1px;
-    transition: all 0.4s ease;
-    font-family: inherit;
-    align-self: flex-start;
-    box-shadow: none;
-    margin-top: 0;
-}
-
-.hidden-btn {
-    opacity: 0;
-    max-height: 0;
-    overflow: hidden;
-    margin-top: 0;
-    pointer-events: none;
-}
-
-.header-left:hover .hidden-btn {
-    opacity: 1;
-    max-height: 50px;
-    margin-top: 1rem;
-    pointer-events: all;
-}
-
-.home-btn:hover {
-    background: #d4af37;
-    color: #0f0f0f;
-    box-shadow: 0 4px 20px rgba(212, 175, 55, 0.4);
 }
 
 nav {
@@ -344,10 +305,6 @@ button:hover {
     
     .logo h1 {
         font-size: 2rem;
-    }
-    
-    .home-btn {
-        align-self: center;
     }
     
     nav {
